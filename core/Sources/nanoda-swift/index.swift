@@ -1,0 +1,3 @@
+enum Nanoda {}
+
+enum Network {}
