@@ -1,3 +1,5 @@
+import Alamofire
+
 extension Nanoda {
     enum Models {}
 }
@@ -22,7 +24,7 @@ extension Nanoda.Models {
 extension Network {
     struct Request<T: Decodable> {
         let path: String
-        var method: String = "GET"
+        var method: HTTPMethod = .get
         let headers: [String: String]
         let query: [String: String]
 

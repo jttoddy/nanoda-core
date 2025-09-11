@@ -1,9 +1,6 @@
 ## Things to sort out (check TODOs as well I guess)
 
-- I've got a network client to set up
-- Twitch auth secrets gotten time to set up the right auth call
-- Add readme
-- Update makefile to pass `.env` to Swift compiler
+- Get a stream of messages from a twitch chat
 
 ## Things I want to do
 
