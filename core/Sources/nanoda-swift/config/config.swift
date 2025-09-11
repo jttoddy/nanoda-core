@@ -1,8 +1,10 @@
+import SwiftDotenv
+
 enum Config {
     enum Twitch {
         enum Client {
-            static let id: String = ""
-            static let secret: String = ""
+            static let id: String = { Dotenv.TWITCH_CLIENT_ID?.stringValue ?? "" }()
+            static let secret: String = { Dotenv.TWITCH_CLIENT_TOKEN?.stringValue ?? "" }()
         }
     }
 

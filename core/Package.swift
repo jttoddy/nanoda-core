@@ -13,16 +13,23 @@ let package = Package(
             targets: ["nanoda-swift"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.10.0"))
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.10.0")),
+        .package(url: "https://github.com/thebarndog/swift-dotenv.git", from: "2.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "nanoda-swift", dependencies: ["Alamofire"]),
+            name: "nanoda-swift",
+            dependencies: [
+                .product(name: "Alamofire", package: "Alamofire"),
+                .product(name: "SwiftDotenv", package: "swift-dotenv"),
+            ]
+        ),
         .testTarget(
-            name: "nanoda-swiftTests",
-            dependencies: ["nanoda-swift"]
+            name: "nanoda-core-integrations",
+            dependencies: ["nanoda-swift"],
+            resources: [.copy("test.env")],
         ),
     ],
 )
