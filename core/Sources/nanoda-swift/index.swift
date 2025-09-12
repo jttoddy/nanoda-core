@@ -1,7 +1,3 @@
-enum Nanoda {}
-
-enum Network {}
-
 public func setup() {
     do {
         try importDotEnv()
