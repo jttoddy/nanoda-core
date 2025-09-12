@@ -1,6 +1,6 @@
 ## Things to sort out (check TODOs as well I guess)
 
-- Verify that we get a welcome_message from eventsub
+- Verify that we get a welcome_message from eventsub <-- YOU ARE HERE
 - Register subscription to eventsub from welcome message id provided above
 - Get a stream of messages from a twitch chat
 - Render view feed of twitch chat as a view model

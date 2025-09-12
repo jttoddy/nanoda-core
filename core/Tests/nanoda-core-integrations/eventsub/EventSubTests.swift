@@ -13,6 +13,9 @@ import Testing
     }
 
     @Test func connectionReceivesWelcome() async throws {
-        // let message = try await Twitch.EventSub.connect()
+        var message = try await Twitch.EventSub.connect()
+        let kind = message.metadata.message.kind
+
+        #expect(kind == .unknown)
     }
 }
