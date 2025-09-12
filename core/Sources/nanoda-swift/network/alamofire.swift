@@ -1,4 +1,5 @@
 import Alamofire
+import Foundation
 
 enum Alamofy {
     static func request<T: Decodable & Sendable>(_ req: Network.Request<T>, host: String)
@@ -18,5 +19,9 @@ enum Alamofy {
                 }
             }
         }
+    }
+
+    static func websocket(url: URL) -> URLSessionWebSocketTask {
+        AF.session.webSocketTask(with: url)
     }
 }
