@@ -1,6 +1,6 @@
 extension Twitch.EventSub {
     enum Endpoint {
-        static func subscriptions(request: Request.Subscriptions)
+        static func createSubscription(request: Request.Subscriptions)
             -> @Sendable (Twitch.ConfigProviding)
             -> Network.EncodableRequest<Request.Subscriptions, Response.Subscriptions>
         {
@@ -14,6 +14,23 @@ extension Twitch.EventSub {
                         "Content-Type": "application/json",
                     ],
                     body: request
+                )
+            }
+        }
+
+        static func deleteSubscription<T>(_ id: String)
+            -> (Twitch.ConfigProviding)
+            -> Network.QueryRequest<T>
+        {
+            return { config in
+                Network.QueryRequest(
+                    path: "/subscriptions",
+                    method: .delete,
+                    headers: [
+                        "Authorization": "Bearer \(config.clientSecret)",
+                        "Client-Id": "\(config.clientID)",
+                    ],
+                    query: ["id": id],
                 )
             }
         }

@@ -18,4 +18,8 @@ extension Network {
 
         var response: T.Type = T.self
     }
+
+    typealias OK = EmptyResponse
+
+    struct EmptyResponse: Codable {}
 }

@@ -2,6 +2,10 @@
 
 - Nanoda core server framework
   - Integrates with Twitch for various API integrations
+  - Has an API for my own clients to use
+    - Web Stream Overlay
+    - Streamdeck-adjacent things (IRL button do thing)
+    - Chat interaction
 
 ## Requirements
 

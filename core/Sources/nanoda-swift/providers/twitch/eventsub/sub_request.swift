@@ -24,8 +24,16 @@ extension Twitch.EventSub {
             transport: .init(session_id: sessionID)
         )
 
-        let endpoint = Endpoint.subscriptions(request: request)(Config.Provider())
+        let endpoint = Endpoint.createSubscription(request: request)(Config.Provider())
 
         return try await Alamofy.request(endpoint, host: Host.api)
+    }
+
+    static func deleteSubscription(with id: String) async throws {
+        let endpoint: Network.QueryRequest<Network.OK> =
+            Endpoint
+            .deleteSubscription(id)(Config.Provider())
+
+        try await Alamofy.request(endpoint, host: Host.api)
     }
 }
