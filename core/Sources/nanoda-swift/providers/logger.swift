@@ -2,6 +2,7 @@ import Logging
 
 enum Log {
     enum Network {
+        static let request = Logger(label: "network-request")
         static let websocket = Logger(label: "network-websocket")
     }
     enum Twitch {
