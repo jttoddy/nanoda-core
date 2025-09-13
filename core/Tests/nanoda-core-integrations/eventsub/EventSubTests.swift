@@ -10,11 +10,13 @@ import Testing
 
     @Test func connectionReceivesWelcome() async throws {
         try importDotEnv()
-        let token = try await Twitch.Identity.getToken()
 
-        // var message = try await Twitch.EventSub.connect()
-        // let kind = message.metadata.message.kind
+        let connectTask = Task {
+            return try await Twitch.EventSub.connect()
+        }
 
-        // #expect(kind == .unknown)
+        let message = try await connectTask.value
+
+        #expect(message.metadata.message_type != nil)
     }
 }

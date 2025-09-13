@@ -7,8 +7,8 @@ extension Twitch.EventSub {
                     path: "/subscriptions",
                     method: .post,
                     headers: [
-                        "Authorization": "Bearer ##TOKEN##",
-                        "Client-Id": "##CLIENT_ID##",
+                        "Authorization": "Bearer \(config.clientSecret)",
+                        "Client-Id": "\(config.clientID)",
                         "Content-Type": "application/json",
                     ],
                     query: [:]

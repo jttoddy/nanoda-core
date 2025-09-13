@@ -28,7 +28,7 @@ extension Twitch.EventSub {
 
     static func connect() async throws -> Message {
         Log.Twitch.eventsub.info("Creating websocket at host \(Host.wss)")
-        let websocket = Alamofy.websocket(url: URL(string: Host.wss)!)
+        let websocket = Network.websocket(at: URL(string: Host.wss)!)
 
         return try await Connector(websocket: websocket).receive()
     }

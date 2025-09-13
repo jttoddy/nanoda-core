@@ -29,14 +29,4 @@ enum Alamofy {
             }
         }
     }
-
-    static func websocket(url: URL) -> Network.Websocket {
-        AF.session.webSocketTask(with: url).alamofy
-    }
-}
-
-extension URLSessionWebSocketTask {
-    var alamofy: Network.Websocket {
-        Network.Websocket(task: self)
-    }
 }
