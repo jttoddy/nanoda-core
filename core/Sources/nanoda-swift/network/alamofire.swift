@@ -2,6 +2,7 @@ import Alamofire
 import Foundation
 
 enum Alamofy {
+    @discardableResult
     static func request<S: Encodable & Sendable, T: Decodable & Sendable>(
         _ req: Network.EncodableRequest<S, T>,
         host: String
@@ -18,6 +19,7 @@ enum Alamofy {
         return try await response(request)
     }
 
+    @discardableResult
     static func request<T: Decodable & Sendable>(
         _ req: Network.QueryRequest<T>,
         host: String
@@ -42,9 +44,15 @@ private func response<T: Decodable & Sendable>(_ req: DataRequest) async throws 
         ) { dataResult in
             switch dataResult.result {
             case .success(let value):
+                Log.Network.request.trace("Retrieved \(T.Type.self)")
                 continuation.resume(with: .success(value))
 
             case .failure(let error):
+                Log.Network.request.error(
+                    """
+                    Failed decoding response: \(error.errorDescription ?? "Unknown")
+                    """
+                )
                 continuation.resume(throwing: error)
             }
         }
