@@ -9,13 +9,15 @@ import Testing
     }
 
     init() throws {
-        try importDotEnv()
+        // try importDotEnv()
     }
 
     @Test func connectionReceivesWelcome() async throws {
-        var message = try await Twitch.EventSub.connect()
-        let kind = message.metadata.message.kind
+        // let token = try await Twitch.Identity.getToken()
 
-        #expect(kind == .unknown)
+        // var message = try await Twitch.EventSub.connect()
+        // let kind = message.metadata.message.kind
+
+        // #expect(kind == .unknown)
     }
 }

@@ -1,5 +1,7 @@
 import Foundation
 
+private let log = Log.Network.websocket
+
 extension Network {
 
     actor Websocket {
@@ -14,9 +16,12 @@ extension Network {
         }
 
         func receive() async throws -> Data {
+            log.info("Websocket receiving")
             let result = try await task.receive()
+            log.info("Done")
             switch result {
             case .data(let data):
+                log.info("Found data")
                 return data
             case .string:
                 throw Errors.stringReturnNotSupported

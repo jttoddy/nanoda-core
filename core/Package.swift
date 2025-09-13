@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.10.0")),
         .package(url: "https://github.com/thebarndog/swift-dotenv.git", from: "2.0.0"),
+        .package(url: "https://github.com/apple/swift-log", from: "1.6.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -24,6 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "SwiftDotenv", package: "swift-dotenv"),
+                .product(name: "Logging", package: "swift-log"),
             ]
         ),
         .testTarget(
