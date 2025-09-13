@@ -14,4 +14,18 @@ extension Twitch.EventSub {
             }
         }
     }
+
+    static func createSubscription(
+        userID: String,
+        sessionID: String
+    ) async throws -> Response.Subscriptions {
+        let request = Request.Subscriptions(
+            condition: .init(user_id: userID),
+            transport: .init(session_id: sessionID)
+        )
+
+        let endpoint = Endpoint.subscriptions(request: request)(Config.Provider())
+
+        return try await Alamofy.request(endpoint, host: Host.api)
+    }
 }
