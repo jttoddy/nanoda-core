@@ -1,9 +1,11 @@
 extension Twitch.EventSub {
     enum Endpoint {
-        static let Subscriptions:
-            @Sendable (Twitch.ConfigProviding) -> Network.Request<Response.Subscriptions> = {
-                config in
-                Network.Request(
+        static func subscriptions(request: Request.Subscriptions)
+            -> @Sendable (Twitch.ConfigProviding)
+            -> Network.EncodableRequest<Request.Subscriptions, Response.Subscriptions>
+        {
+            return { config in
+                Network.EncodableRequest(
                     path: "/subscriptions",
                     method: .post,
                     headers: [
@@ -11,8 +13,9 @@ extension Twitch.EventSub {
                         "Client-Id": "\(config.clientID)",
                         "Content-Type": "application/json",
                     ],
-                    query: [:]
+                    body: request
                 )
             }
+        }
     }
 }

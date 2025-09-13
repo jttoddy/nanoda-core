@@ -7,8 +7,8 @@ extension Twitch {
         enum Endpoint {
             static let OAuthToken:
                 @Sendable (ConfigProviding) ->
-                    Network.Request<Response.OAuthToken> = { config in
-                        Network.Request(
+                    Network.QueryRequest<Response.OAuthToken> = { config in
+                        Network.QueryRequest(
                             path: "/oauth2/token", method: .post,
                             headers: ["Content-Type": "application/x-www-form-urlencoded"],
                             query: [

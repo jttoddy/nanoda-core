@@ -1,11 +1,20 @@
 import Alamofire
 
 extension Network {
-    struct Request<T: Decodable> {
+    struct QueryRequest<T: Decodable> {
         let path: String
         var method: HTTPMethod = .get
         let headers: [String: String]
-        let query: [String: String]
+        var query: [String: String] = [:]
+
+        var response: T.Type = T.self
+    }
+
+    struct EncodableRequest<S: Encodable, T: Decodable> {
+        let path: String
+        var method: HTTPMethod = .get
+        let headers: [String: String]
+        let body: S
 
         var response: T.Type = T.self
     }
