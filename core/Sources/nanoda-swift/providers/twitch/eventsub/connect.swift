@@ -1,9 +1,19 @@
+import Atomics
 import Foundation
 import Logging
+
+typealias MessageStream = AsyncThrowingMapSequence<WebSocketStream, Twitch.EventSub.Message>
+
+extension URLSessionWebSocketTask: AtomicReference {}
+
+extension ManagedAtomic: @unchecked Sendable {}
+
+private let connections = ManagedAtomic<URLSessionWebSocketTask?>(nil)
 
 extension Twitch.EventSub {
     enum Errors: Error {
         case unknownMessageType
+        case subscription
     }
 
     actor Connector {
@@ -29,7 +39,21 @@ extension Twitch.EventSub {
     static func connect() async throws -> Message {
         Log.Twitch.eventsub.info("Creating websocket at host \(Host.wss)")
         let websocket = Network.websocket(at: URL(string: Host.wss)!)
+        connections.store(websocket.task, ordering: .relaxed)
 
         return try await Connector(websocket: websocket).receive()
+    }
+
+    static func stream() -> MessageStream {
+        Log.Twitch.eventsub.info("Creating websocket at host \(Host.wss)")
+        let websocket = Network.session.webSocketTask(with: URL(string: Host.wss)!)
+        connections.store(websocket, ordering: .relaxed)
+
+        defer {
+            // Could potentially have a session manager for resume/pause connection
+            websocket.resume()
+        }
+
+        return Network.subscription(websocket.asyncStream)
     }
 }

@@ -1,9 +1,32 @@
 import Foundation
 
 private let log = Log.Network.websocket
-private let session = URLSession(configuration: URLSessionConfiguration.default)
+
+public typealias WebSocketStream = AsyncThrowingStream<URLSessionWebSocketTask.Message, Error>
+
+extension URLSessionWebSocketTask {
+    public var asyncStream: WebSocketStream {
+        return WebSocketStream { continuation in
+            Task {
+                var isAlive = true
+
+                while isAlive && closeCode == .invalid {
+                    do {
+                        let value = try await receive()
+                        continuation.yield(value)
+                    } catch {
+                        continuation.finish(throwing: error)
+                        isAlive = false
+                    }
+                }
+            }
+        }
+    }
+}
 
 extension Network {
+
+    static let session = URLSession(configuration: URLSessionConfiguration.default)
 
     static func websocket(at path: URL) -> Websocket {
         let task = session.webSocketTask(with: path)
@@ -18,7 +41,6 @@ extension Network {
         }
 
         enum Errors: Error {
-            case stringReturnNotSupported(String)
             case unknownReturnTypeFromWebsocket
         }
 
@@ -65,5 +87,25 @@ extension Network {
                 return try JSONDecoder().decode(T.self, from: data!)
             }
         }
+    }
+
+    static func subscription<T: Decodable>(_ stream: WebSocketStream)
+        -> AsyncThrowingMapSequence<
+            WebSocketStream, T
+        >
+    {
+        let stream = stream.map { message in
+            switch message {
+            case .data(let data):
+                return try JSONDecoder().decode(T.self, from: data)
+            case .string(let string):
+                let data = string.data(using: .utf8)
+                return try JSONDecoder().decode(T.self, from: data!)
+            default:
+                throw Websocket.Errors.unknownReturnTypeFromWebsocket
+            }
+        }
+
+        return stream
     }
 }
