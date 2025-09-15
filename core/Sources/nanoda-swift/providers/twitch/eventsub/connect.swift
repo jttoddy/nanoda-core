@@ -1,14 +1,17 @@
-import Atomics
 import Foundation
 import Logging
 
 typealias MessageStream = AsyncThrowingMapSequence<WebSocketStream, Twitch.EventSub.Message>
 
-extension URLSessionWebSocketTask: AtomicReference {}
+struct WebsocketConnection {
+    let id: String
+    let task: URLSessionWebSocketTask
+    let stream: MessageStream
 
-extension ManagedAtomic: @unchecked Sendable {}
-
-private let connections = ManagedAtomic<URLSessionWebSocketTask?>(nil)
+    func cancel() {
+        task.cancel(with: URLSessionWebSocketTask.CloseCode.normalClosure, reason: nil)
+    }
+}
 
 extension Twitch.EventSub {
     enum Errors: Error {
@@ -39,21 +42,23 @@ extension Twitch.EventSub {
     static func connect() async throws -> Message {
         Log.Twitch.eventsub.info("Creating websocket at host \(Host.wss)")
         let websocket = Network.websocket(at: URL(string: Host.wss)!)
-        connections.store(websocket.task, ordering: .relaxed)
 
         return try await Connector(websocket: websocket).receive()
     }
 
-    static func stream() -> MessageStream {
+    static func stream(id: String = "twitch-eventsub-stream") -> WebsocketConnection {
         Log.Twitch.eventsub.info("Creating websocket at host \(Host.wss)")
         let websocket = Network.session.webSocketTask(with: URL(string: Host.wss)!)
-        connections.store(websocket, ordering: .relaxed)
 
         defer {
             // Could potentially have a session manager for resume/pause connection
             websocket.resume()
         }
 
-        return Network.subscription(websocket.asyncStream)
+        return WebsocketConnection(
+            id: id,
+            task: websocket,
+            stream: Network.subscription(websocket.asyncStream)
+        )
     }
 }
