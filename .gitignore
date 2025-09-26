@@ -8,3 +8,4 @@ DerivedData/
 .netrc
 core/.build
 .env
+node/node_modules
