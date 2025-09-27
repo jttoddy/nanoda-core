@@ -1,4 +1,8 @@
-// Dummy Twitch credentials (replace with real ones in production)
-export const TWITCH_CLIENT_ID = 'dummy_client_id';
-export const TWITCH_CLIENT_SECRET = 'dummy_client_secret';
-export const CALLBACK_URL = 'https://your-public-url.com/eventsub'; // Replace with your public HTTPS URL
+// Loads Twitch credentials from environment variables using dotenv
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+
+export const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID || "";
+export const TWITCH_CLIENT_TOKEN = process.env.TWITCH_CLIENT_TOKEN || "";
+export const CALLBACK_URL = "http://localhost:3000/eventsub";
