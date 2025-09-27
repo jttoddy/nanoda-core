@@ -1,13 +1,13 @@
-import express from 'express';
+import * as server from "./server";
 
-const app = express();
-app.use(express.json());
+server.startServer();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+process.on("SIGINT", () => {
+  server.stopServer();
+  process.exit();
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+process.on("SIGTERM", () => {
+  server.stopServer();
+  process.exit();
 });

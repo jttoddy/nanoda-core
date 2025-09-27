@@ -9,3 +9,4 @@ DerivedData/
 core/.build
 .env
 node/node_modules
+node/dist
