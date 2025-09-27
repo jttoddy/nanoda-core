@@ -10,3 +10,5 @@ core/.build
 .env
 node/node_modules
 node/dist
+node/backend/node_modules
+node/web/node_modules

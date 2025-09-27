@@ -8,8 +8,11 @@ import * as server from "./server";
 import { TwitchChatConnection } from "./provider/chat-webhook";
 import { getTwitchAccessToken } from "./provider/oauth";
 import { receiveMessage } from "./chat";
+import { startWebSocketServer, stopWebSocketServer } from "./websocket-server";
 
 let chat: TwitchChatConnection;
+
+startWebSocketServer(8080);
 
 (async () => {
   const token = await getTwitchAccessToken();
@@ -23,12 +26,14 @@ let chat: TwitchChatConnection;
 // Graceful shutdown
 
 process.on("SIGINT", async () => {
+  stopWebSocketServer();
   server.stopServer();
   await chat.disconnect();
   process.exit();
 });
 
 process.on("SIGTERM", async () => {
+  stopWebSocketServer();
   server.stopServer();
   await chat.disconnect();
   process.exit();

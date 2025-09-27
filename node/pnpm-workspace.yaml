@@ -1,2 +1,3 @@
-onlyBuiltDependencies:
-  - twitch
+packages:
+  - "backend"
+  - "web"
