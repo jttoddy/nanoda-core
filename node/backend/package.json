@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "lint": "eslint . --ext .ts --config eslint.config.mts",
-    "format": "prettier --write 'src/**/*.ts'",
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "lint": "eslint . --ext .ts --config ../eslint.config.mts",
+    "format": "prettier --write '**/*.ts'",
+    "dev": "nodemon --watch src --exec ts-node index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
