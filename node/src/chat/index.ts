@@ -1,5 +1,5 @@
-import { ChatMessage } from "../provider/chat-webhook";
+import { ChatMessage, formatChatMessage } from "./ChatMessage";
 
 export function receiveMessage(msg: string, data: ChatMessage) {
-  console.log(JSON.stringify({ msg, data }));
+  console.log(formatChatMessage(data));
 }

@@ -1,11 +1,6 @@
 // --- Twitch Chat via WebSockets (tmi.js) ---
 import tmi from "tmi.js";
-export type ChatMessage = {
-  channel: string;
-  tags: tmi.ChatUserstate;
-  message: string;
-  self: boolean;
-};
+import { ChatMessage } from "../chat/ChatMessage";
 export class TwitchChatConnection {
   private tmiClient: tmi.Client;
   private bus: { publish: (event: string, data: ChatMessage) => void };
