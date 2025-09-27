@@ -1,6 +1,12 @@
 import axios from "axios";
 import { TWITCH_CLIENT_ID, TWITCH_CLIENT_TOKEN } from "../config/twitch";
 
+export type OAuthTokenResponse = {
+  access_token: string;
+  expires_in?: number;
+  refresh_token?: string;
+};
+
 // Get Twitch App Access Token
 export async function getTwitchAccessToken() {
   console.log(`Requesting Twitch access token for ${TWITCH_CLIENT_ID}...`);
@@ -11,6 +17,6 @@ export async function getTwitchAccessToken() {
       grant_type: "client_credentials",
     },
   });
-  const accessToken: string = resp.data.access_token;
+  const accessToken: OAuthTokenResponse = resp.data;
   return accessToken;
 }

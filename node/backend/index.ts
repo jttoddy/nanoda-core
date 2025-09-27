@@ -16,7 +16,7 @@ startWebSocketServer(8080);
 
 (async () => {
   const token = await getTwitchAccessToken();
-  await server.startServer(token);
+  await server.startServer(token.access_token);
   chat = new TwitchChatConnection("nanoda_ch", "nanoda_ch", {
     publish: receiveMessage,
   });

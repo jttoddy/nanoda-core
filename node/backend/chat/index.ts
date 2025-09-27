@@ -1,6 +1,12 @@
 import { broadcastChatMessage } from "../websocket-server";
 import { ChatMessage, formatChatMessage } from "./ChatMessage";
 
+/**
+ * Handles an incoming chat message by formatting and broadcasting it.
+ *
+ * @param msg - The raw message string received.
+ * @param data - The structured chat message data to be processed.
+ */
 export function receiveMessage(msg: string, data: ChatMessage) {
   console.log(formatChatMessage(data));
   broadcastChatMessage(data);

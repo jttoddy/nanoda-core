@@ -1,6 +1,9 @@
 // --- Twitch Chat via WebSockets (tmi.js) ---
 import tmi from "tmi.js";
 import { ChatMessage } from "../chat/ChatMessage";
+
+const TWITCH_CHAT_MESSAGE_EVENT = "twitch.chat.message";
+
 export class TwitchChatConnection {
   private tmiClient: tmi.Client;
   private bus: { publish: (event: string, data: ChatMessage) => void };
@@ -26,7 +29,7 @@ export class TwitchChatConnection {
       ) => {
         if (self) return; // Ignore messages from the bot itself
         // Publish the message event to the bus
-        this.bus.publish("twitch.chat.message", {
+        this.bus.publish(TWITCH_CHAT_MESSAGE_EVENT, {
           channel,
           tags,
           message,
