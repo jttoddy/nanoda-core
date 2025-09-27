@@ -1,19 +1,35 @@
-import * as server from "./server";
-import * as chat from "./provider/chat-webhook";
+import dotenv from "dotenv";
+import path from "path";
 
-server.startServer();
-chat.connectTwitchChat();
+const envPath = path.resolve(__dirname, "../../.env");
+dotenv.config({ path: envPath });
+
+import * as server from "./server";
+import { TwitchChatConnection } from "./provider/chat-webhook";
+import { getTwitchAccessToken } from "./provider/oauth";
+import { receiveMessage } from "./chat";
+
+let chat: TwitchChatConnection;
+
+(async () => {
+  const token = await getTwitchAccessToken();
+  await server.startServer(token);
+  chat = new TwitchChatConnection("nanoda_ch", "nanoda_ch", {
+    publish: receiveMessage,
+  });
+  await chat.connect();
+})();
 
 // Graceful shutdown
 
-process.on("SIGINT", () => {
+process.on("SIGINT", async () => {
   server.stopServer();
-  chat.disconnectTwitchChat();
+  await chat.disconnect();
   process.exit();
 });
 
-process.on("SIGTERM", () => {
+process.on("SIGTERM", async () => {
   server.stopServer();
-  chat.disconnectTwitchChat();
+  await chat.disconnect();
   process.exit();
 });
