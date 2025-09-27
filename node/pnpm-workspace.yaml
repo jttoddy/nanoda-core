@@ -1,3 +1,6 @@
 packages:
-  - "backend"
-  - "web"
+  - backend
+  - web
+
+onlyBuiltDependencies:
+  - esbuild

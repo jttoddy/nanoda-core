@@ -9,12 +9,18 @@
   background: #23272e;
   border-radius: 8px;
   box-shadow: 0 4px 32px #000a;
-  width: 480px;
-  max-width: 100vw;
+  width: 90vw;
+  max-width: 480px;
   margin-top: 48px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .terminal-window {
+    margin-top: 16px;
+  }
 }
 .terminal-header {
   background: #18181b;
@@ -23,7 +29,28 @@
   font-size: 1.1em;
   padding: 12px 20px;
   border-bottom: 1px solid #333;
+  display: flex;
+  gap: 0.5em;
 }
+
+.wave-char {
+  display: inline-block;
+  animation: wave 1.2s infinite ease-in-out;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-8px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+}
+
 .terminal-body {
   background: #23272e;
   color: #fff;
@@ -31,7 +58,6 @@
   font-size: 1em;
   padding: 16px 20px 0 20px;
   min-height: 320px;
-  max-height: 400px;
   overflow-y: auto;
 }
 .terminal-line {
@@ -62,10 +88,7 @@
   border-radius: 4px;
 }
 .username {
-  color: #9147ff;
+  color: #c084fc; /* Increased contrast for better accessibility */
   font-weight: bold;
   margin-right: 0.5em;
-}
-.message {
-  color: #fff;
 }
