@@ -2,7 +2,7 @@ import axios from "axios";
 import { getTwitchAccessToken } from "./oauth";
 import { CALLBACK_URL, TWITCH_CLIENT_ID } from "../config/twitch";
 
-let twitchAccessToken: string | null = null;
+const twitchAccessToken: string | null = null;
 
 // Subscribe to EventSub for chat messages
 export async function subscribeToChatMessages(broadcasterUserId: string) {

@@ -3,30 +3,36 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --config eslint.config.mts",
     "format": "prettier --write 'src/**/*.ts'",
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "@twurple/api": "^7.4.0",
+    "@types/dotenv": "^8.2.3",
     "@types/tmi.js": "^1.8.6",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.36.0",
     "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "tmi.js": "^1.8.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.1"
   },
   "dependencies": {
     "@types/axios": "^0.14.4",
-    "axios": "^1.12.2"
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.2"
   }
 }
