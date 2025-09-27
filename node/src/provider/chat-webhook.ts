@@ -3,16 +3,19 @@ import tmi from "tmi.js";
 
 let tmiClient: tmi.Client | null = null;
 
-export function connectTwitchChat() {
+export function connectTwitchChat(
+  user: string = "nanoda_ch",
+  channel: string = "nanoda_ch"
+) {
   // Configure tmi.js client
   tmiClient = new tmi.Client({
     options: { debug: true },
     connection: { reconnect: true, secure: true },
     identity: {
-      username: "your_twitch_username", // Replace with your bot/username
+      username: user, // Replace with your bot/username
       password: "oauth:your_oauth_token", // Get from https://twitchapps.com/tmi/
     },
-    channels: ["your_channel"], // Replace with the channel you want to join
+    channels: [channel], // Replace with the channel you want to join
   });
   tmiClient.connect().catch(console.error);
   tmiClient.on(

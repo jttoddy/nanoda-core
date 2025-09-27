@@ -10,5 +10,5 @@ export async function getTwitchAccessToken() {
       grant_type: "client_credentials",
     },
   });
-  return resp.data.access_token;
+  return resp.data.access_token as string;
 }

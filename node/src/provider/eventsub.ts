@@ -1,12 +1,11 @@
 import axios from "axios";
-import { getTwitchAccessToken } from "./oauth";
 import { CALLBACK_URL, TWITCH_CLIENT_ID } from "../config/twitch";
 
-const twitchAccessToken: string | null = null;
-
 // Subscribe to EventSub for chat messages
-export async function subscribeToChatMessages(broadcasterUserId: string) {
-  if (!twitchAccessToken) await getTwitchAccessToken();
+export async function subscribeToChatMessages(
+  broadcasterUserId: string,
+  twitchAccessToken: string
+) {
   await axios.post(
     "https://api.twitch.tv/helix/eventsub/subscriptions",
     {

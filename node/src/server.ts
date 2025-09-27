@@ -1,6 +1,7 @@
 import express from "express";
 import { subscribeToChatMessages } from "./provider/eventsub";
 import { Server } from "http";
+import { getTwitchAccessToken } from "./provider/oauth";
 
 const PORT = process.env.PORT || 3000;
 const server = express();
@@ -32,25 +33,26 @@ server.get("/", (req, res) => {
 });
 
 let httpServer: Server | null = null;
+let token: string | null = null;
 
-export function startServer(streamerName: string = "nanoda_ch") {
+export async function startServer(streamerName: string = "nanoda_ch") {
   httpServer = server.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`);
     // Example: subscribe to chat messages for a dummy broadcaster
     // Replace '123456789' with the actual broadcaster_user_id
     try {
-      await subscribeToChatMessages(streamerName);
-      console.log("Subscribed to chat messages!");
-    } catch (err) {
-      if (err && typeof err === "object") {
-        const anyErr = err as any;
-        console.error(
-          "Failed to subscribe to EventSub:",
-          anyErr.response?.data || anyErr.message
-        );
-      } else {
-        console.error("Failed to subscribe to EventSub:", err);
+      if (!token) {
+        await getTwitchAccessToken().then((t) => (token = t));
       }
+
+      if (token) {
+        await subscribeToChatMessages(streamerName, token);
+        console.log("Subscribed to chat messages!");
+      } else {
+        console.error("Failed to obtain Twitch access token.");
+      }
+    } catch (err) {
+      console.error("Failed to subscribe to EventSub:", err);
     }
   });
 }
