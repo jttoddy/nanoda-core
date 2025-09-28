@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint . --ext .ts --config ../eslint.config.mts",
+    "format": "prettier --write '**/*.ts'",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -15,7 +17,15 @@
   "devDependencies": {
     "vite": "^5.0.0",
     "@vitejs/plugin-react": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "typescript": "^5.0.0",
+    "typescript-eslint": "^8.44.1",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
   }

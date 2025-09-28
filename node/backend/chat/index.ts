@@ -1,3 +1,4 @@
+import logger from "../config/logger";
 import { broadcastChatMessage } from "../websocket-server";
 import { ChatMessage, formatChatMessage } from "./ChatMessage";
 
@@ -8,6 +9,6 @@ import { ChatMessage, formatChatMessage } from "./ChatMessage";
  * @param data - The structured chat message data to be processed.
  */
 export function receiveMessage(msg: string, data: ChatMessage) {
-  console.log(formatChatMessage(data));
+  logger.info(formatChatMessage(data));
   broadcastChatMessage(data);
 }

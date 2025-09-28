@@ -1,5 +1,6 @@
 // --- Twitch Chat via WebSockets (tmi.js) ---
 import tmi from "tmi.js";
+import logger from "../config/logger";
 import { ChatMessage } from "../chat/ChatMessage";
 
 const TWITCH_CHAT_MESSAGE_EVENT = "twitch.chat.message";
@@ -43,20 +44,20 @@ export class TwitchChatConnection {
     try {
       await this.tmiClient.connect();
     } catch (error) {
-      console.error("Failed to connect to Twitch Chat:", error);
+      logger.error({ err: error }, "Failed to connect to Twitch Chat");
     }
   }
 
   async disconnect() {
     if (!this.tmiClient || this.tmiClient.readyState() === "CLOSED") {
-      console.log("Twitch Chat is already disconnected or not initialized.");
+      logger.info("Twitch Chat is already disconnected or not initialized.");
       return;
     }
     try {
       await this.tmiClient.disconnect();
-      console.log("Disconnected from Twitch Chat");
+      logger.info("Disconnected from Twitch Chat");
     } catch (error) {
-      console.error("Error during disconnect:", error);
+      logger.error({ err: error }, "Error during disconnect");
     }
   }
 }
