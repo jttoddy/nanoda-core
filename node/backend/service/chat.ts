@@ -7,14 +7,13 @@ export interface ConnectsToChat {
   connectToChat: () => Promise<void>;
 }
 
-class ChatService implements ConnectsToChat {
+class IRCChatService implements ConnectsToChat {
   // initialiser that accepts a string value as a parameter
   constructor(
-    userName: string = "nanoda_ch",
     channelName: string = "nanoda_ch",
     receiveMessage: (msg: string, data: ChatMessage) => void
   ) {
-    this.chat = new TwitchChatConnection(userName, channelName, {
+    this.chat = new TwitchChatConnection(undefined, channelName, {
       publish: receiveMessage,
     });
   }
@@ -31,8 +30,4 @@ class ChatService implements ConnectsToChat {
   }
 }
 
-export default new ChatService(
-  "nanoda_ch",
-  "nanoda_ch",
-  handler
-) as ConnectsToChat;
+export const irc = new IRCChatService("nanoda_ch", handler) as ConnectsToChat;

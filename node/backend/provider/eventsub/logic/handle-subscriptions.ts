@@ -1,9 +1,11 @@
 import logger from "@config/logger";
-import { EventSubApiClient } from "..";
+import { EventSubClient } from "..";
 import {
-  createEventSubscription,
+  createSubscriptionListeners,
+  deleteEventSubscription,
   EventSubRequest,
   EventSubRequestType,
+  getEventSubscriptions,
 } from "../behaviour/subscribe";
 
 type HandlesEventSubSubscriptions = {
@@ -15,7 +17,7 @@ type HandlesEventSubSubscriptions = {
 };
 
 export function handleSubscriptions(
-  api: EventSubApiClient
+  api: EventSubClient
 ): HandlesEventSubSubscriptions {
   return {
     async create(req) {
@@ -23,7 +25,7 @@ export function handleSubscriptions(
       if (!api.apiClient) {
         throw new Error("API client not initialized");
       }
-      const subscription = createEventSubscription(api.apiClient);
+      const subscription = createSubscriptionListeners(api.apiClient);
       try {
         const result = await subscription(req);
         logger.info(`Subscription created: ${JSON.stringify(result)}`);
@@ -37,12 +39,15 @@ export function handleSubscriptions(
       if (!api.apiClient) {
         throw new Error("API client not initialized");
       }
+      await deleteEventSubscription(api.apiClient)(id);
+      logger.info(`Subscription with ID ${id} deleted`);
     },
     async get() {
       logger.info("Fetching all subscriptions");
       if (!api.apiClient) {
         throw new Error("API client not initialized");
       }
+      await getEventSubscriptions(api.apiClient);
       return []; // Placeholder, should return actual subscription IDs
     },
   };

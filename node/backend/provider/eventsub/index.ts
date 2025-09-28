@@ -7,17 +7,20 @@ import { TWITCH_CLIENT_ID, TWITCH_CLIENT_TOKEN } from "@config/twitch";
 export interface StartsEventSubWsListener {
   start: () => Promise<void>;
   stop: () => Promise<void>;
+  sessionId?: string;
 }
 
-export interface EventSubApiClient {
+export interface EventSubClient {
+  wsListener: EventSubWsListener | null;
   apiClient: ApiClient | null;
 }
 
 export class EventSubProvider
-  implements StartsEventSubWsListener, EventSubApiClient
+  implements StartsEventSubWsListener, EventSubClient
 {
   wsListener: EventSubWsListener | null = null;
   apiClient: ApiClient | null = null;
+  sessionId?: string;
 
   async start() {
     const authProvider = new AppTokenAuthProvider(
