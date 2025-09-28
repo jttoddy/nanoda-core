@@ -4,9 +4,20 @@ import { AppTokenAuthProvider } from "@twurple/auth";
 import logger from "@config/logger";
 import { TWITCH_CLIENT_ID, TWITCH_CLIENT_TOKEN } from "@config/twitch";
 
-export class EventSubProvider {
-  private wsListener: EventSubWsListener | null = null;
-  private apiClient: ApiClient | null = null;
+export interface StartsEventSubWsListener {
+  start: () => Promise<void>;
+  stop: () => Promise<void>;
+}
+
+export interface EventSubApiClient {
+  apiClient: ApiClient | null;
+}
+
+export class EventSubProvider
+  implements StartsEventSubWsListener, EventSubApiClient
+{
+  wsListener: EventSubWsListener | null = null;
+  apiClient: ApiClient | null = null;
 
   async start() {
     const authProvider = new AppTokenAuthProvider(

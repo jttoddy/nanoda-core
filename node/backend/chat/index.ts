@@ -1,5 +1,5 @@
 import logger from "../config/logger";
-import { broadcastChatMessage } from "../service/websocket-server";
+import * as ws from "../service/websocket-server";
 import { ChatMessage, formatChatMessage } from "./ChatMessage";
 
 /**
@@ -10,5 +10,5 @@ import { ChatMessage, formatChatMessage } from "./ChatMessage";
  */
 export function receiveMessage(msg: string, data: ChatMessage) {
   logger.info(formatChatMessage(data));
-  broadcastChatMessage(data);
+  ws.broadcastChatMessage(data);
 }

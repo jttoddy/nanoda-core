@@ -28,12 +28,7 @@ async function startEverything() {
   await server.startServer();
   logger.info("Requesting Twitch access token...");
   // const token = new TwitchTokenManager();
-  logger.info("Connecting to Twitch chat...");
-  chat = new TwitchChatConnection("nanoda_ch", "nanoda_ch", {
-    publish: receiveMessage,
-  });
-  await chat.connect();
-  logger.info("Twitch chat connected.");
+  await connectToChat();
 }
 
 async function gracefulShutdown() {
