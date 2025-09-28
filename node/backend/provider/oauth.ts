@@ -1,6 +1,6 @@
 import axios from "axios";
-import { TWITCH_CLIENT_ID, TWITCH_CLIENT_TOKEN } from "../config/twitch";
-import logger from "../config/logger";
+import { TWITCH_CLIENT_ID, TWITCH_CLIENT_TOKEN } from "@config/twitch";
+import logger from "@config/logger";
 
 export type OAuthTokenResponse = {
   access_token: string;

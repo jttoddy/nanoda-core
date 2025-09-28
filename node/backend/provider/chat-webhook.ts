@@ -1,7 +1,7 @@
 // --- Twitch Chat via WebSockets (tmi.js) ---
 import tmi from "tmi.js";
-import logger from "../config/logger";
-import { ChatMessage } from "../chat/ChatMessage";
+import logger from "@config/logger";
+import { ChatMessage } from "@chat/ChatMessage";
 
 const TWITCH_CHAT_MESSAGE_EVENT = "twitch.chat.message";
 

@@ -5,8 +5,8 @@ const envPath = path.resolve(__dirname, "../../.env");
 dotenv.config({ path: envPath });
 
 import * as server from "./server";
-import logger from "./config/logger";
-import { TwitchChatConnection } from "./provider/chat-webhook";
+import logger from "@config/logger";
+import { TwitchChatConnection } from "@provider/chat-webhook";
 import { getTwitchAccessToken } from "./provider/oauth";
 import { receiveMessage } from "./chat";
 import { startWebSocketServer, stopWebSocketServer } from "./websocket-server";

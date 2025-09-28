@@ -7,7 +7,13 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@chat/*": ["chat/*"],
+      "@config/*": ["config/*"],
+      "@provider/*": ["provider/*"]
+    }
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"]
