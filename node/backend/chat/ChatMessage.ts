@@ -9,12 +9,12 @@ export type UserTags = tmi.ChatUserstate;
  * @property message - The content of the chat message.
  * @property self - Indicates if the message was sent by the current user.
  */
-export type ChatMessage = {
+export interface ChatMessage {
   channel: string;
   tags: UserTags;
   message: string;
   self: boolean;
-};
+}
 
 // Formats ChatMessage into a string for logging or display
 /**

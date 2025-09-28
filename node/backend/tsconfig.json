@@ -12,7 +12,8 @@
     "paths": {
       "@chat/*": ["chat/*"],
       "@config/*": ["config/*"],
-      "@provider/*": ["provider/*"]
+      "@provider/*": ["provider/*"],
+      "@service/*": ["service/*"]
     }
   },
   "include": ["./**/*.ts"],

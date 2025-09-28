@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
-import type { ChatMessage } from "./chat/ChatMessage";
+import type { ChatMessage } from "../chat/ChatMessage";
 
 const server = createServer();
 const wss = new WebSocketServer({ server });

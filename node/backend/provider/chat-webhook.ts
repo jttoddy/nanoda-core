@@ -10,8 +10,8 @@ export class TwitchChatConnection {
   private bus: { publish: (event: string, data: ChatMessage) => void };
 
   constructor(
-    user: string = "nanoda_ch",
-    channel: string = "nanoda_ch",
+    user = "nanoda_ch",
+    channel = "nanoda_ch",
     bus: { publish: (event: string, data: ChatMessage) => void },
     token?: string
   ) {

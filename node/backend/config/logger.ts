@@ -11,7 +11,7 @@ const truncateStream = new Transform({
   transform(chunk, encoding, callback) {
     const lines = chunk.toString().split("\n");
     const processed = lines
-      .map((line: string | any[]) =>
+      .map((line: string) =>
         line.length > maxLineLength ? line.slice(0, maxLineLength) : line
       )
       .join("\n");

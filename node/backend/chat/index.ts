@@ -1,5 +1,5 @@
 import logger from "../config/logger";
-import { broadcastChatMessage } from "../websocket-server";
+import { broadcastChatMessage } from "../service/websocket-server";
 import { ChatMessage, formatChatMessage } from "./ChatMessage";
 
 /**
