@@ -66,7 +66,6 @@ export class TwitchChatConnection {
 function anonymousClient(channel: string) {
   return new tmi.Client({
     channels: [channel],
-    options: { debug: true },
     connection: { reconnect: true, secure: true },
   });
 }
@@ -75,7 +74,6 @@ function anonymousClient(channel: string) {
 function authorizedClient(channel: string, token: string, user: string) {
   return new tmi.Client({
     channels: [channel],
-    options: { debug: true },
     connection: { reconnect: true, secure: true },
     identity: {
       username: user,
