@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@twurple/auth": "^7.4.0",
+    "@twurple/eventsub-base": "^7.4.0",
     "@twurple/eventsub-ws": "^7.4.0",
     "@types/axios": "^0.14.4",
     "@types/pino-multi-stream": "^5.1.6",

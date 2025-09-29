@@ -1,1 +1,2 @@
-export const SERVER_PORT = process.env.PORT || 3000;
+export const SERVER_PORT = 3000;
+export const WEBSOCKET_PORT = 8080;

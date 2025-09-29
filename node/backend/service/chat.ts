@@ -3,6 +3,8 @@ import logger from "@config/logger";
 import { TwitchChatConnection } from "@provider/chat-webhook";
 import { receiveMessage as handler } from "@chat/index";
 
+const DEFAULT_CHANNEL = "nanoda_ch";
+
 export interface ConnectsToChat {
   connectToChat: () => Promise<void>;
 }
@@ -10,7 +12,7 @@ export interface ConnectsToChat {
 class IRCChatService implements ConnectsToChat {
   // initialiser that accepts a string value as a parameter
   constructor(
-    channelName: string = "nanoda_ch",
+    channelName: string = DEFAULT_CHANNEL,
     receiveMessage: (msg: string, data: ChatMessage) => void
   ) {
     this.chat = new TwitchChatConnection(undefined, channelName, {
@@ -30,4 +32,7 @@ class IRCChatService implements ConnectsToChat {
   }
 }
 
-export const irc = new IRCChatService("nanoda_ch", handler) as ConnectsToChat;
+export const irc = new IRCChatService(
+  DEFAULT_CHANNEL,
+  handler
+) as ConnectsToChat;

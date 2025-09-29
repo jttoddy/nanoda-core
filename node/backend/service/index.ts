@@ -5,17 +5,9 @@ import {
   stopWebSocketServer,
 } from "@service/websocket-server";
 import { irc } from "./chat";
-import {
-  EventSubClient,
-  EventSubProvider,
-  StartsEventSubWsListener,
-} from "@provider/eventsub";
-import {
-  createRaidListeners,
-  createSubscriptionListeners,
-} from "@provider/eventsub/behaviour/subscribe";
 
-let eventSub: (EventSubClient & StartsEventSubWsListener) | null = null;
+import { WEBSOCKET_PORT } from "@config/ports";
+import { startEventSub, stopEventSub } from "./eventsub";
 
 /**
  * Initializes and starts all core backend services:
@@ -30,8 +22,7 @@ let eventSub: (EventSubClient & StartsEventSubWsListener) | null = null;
  * @returns {Promise<void>} Resolves when all services are started and connected.
  */
 async function startEverything(
-  userId: string = "nanoda_ch",
-  websocketServerPort: number = 8080
+  websocketServerPort: number = WEBSOCKET_PORT
 ): Promise<void> {
   logger.info(`Starting WebSocket server on port ${websocketServerPort}`);
   startWebSocketServer(websocketServerPort);
@@ -43,19 +34,12 @@ async function startEverything(
   await irc.connectToChat();
   logger.info("Twitch chat connected.");
 
-  logger.info("Starting EventSub WebSocket listener...");
-  eventSub = new EventSubProvider();
-  await eventSub.start();
-  logger.info("EventSub WebSocket listener started.");
-  if (!eventSub.wsListener) {
-    throw new Error("EventSub WebSocket listener not initialized");
-  }
-  createSubscriptionListeners(eventSub.wsListener);
-  createRaidListeners(eventSub.wsListener, userId);
+  await startEventSub();
+  logger.info("All services started successfully.");
 }
 
 async function gracefulShutdown() {
-  await eventSub?.stop();
+  await stopEventSub();
   logger.info("Shutting down WebSocket server...");
   stopWebSocketServer();
   logger.info("Shutting down HTTP server...");
