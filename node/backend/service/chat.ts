@@ -3,7 +3,7 @@ import logger from "@config/logger";
 import { TwitchChatConnection } from "@provider/chat-webhook";
 import { receiveMessage as handler } from "@chat/index";
 
-const DEFAULT_CHANNEL = "nanoda_ch";
+const DEFAULT_CHANNEL = "NaughtyRoomba";
 
 export interface ConnectsToChat {
   connectToChat: () => Promise<void>;
