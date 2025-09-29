@@ -13,3 +13,4 @@ node/dist
 node/backend/node_modules
 node/web/node_modules
 node/backend/logs
+node/term/node_modules

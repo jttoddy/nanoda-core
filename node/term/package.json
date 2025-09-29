@@ -1,0 +1,42 @@
+{
+  "name": "nanoda-chat-cli",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts --config ../eslint.config.mts",
+    "format": "prettier --write '**/*.ts'",
+    "dev": "nodemon --watch . --exec ts-node -r tsconfig-paths/register index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.4",
+    "@types/pino-multi-stream": "^5.1.6",
+    "@types/ws": "^8.18.1",
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.2",
+    "pino": "^9.11.0",
+    "pino-multi-stream": "^6.0.0",
+    "pino-pretty": "^13.1.1",
+    "tsconfig-paths": "^4.2.0",
+    "ws": "^8.18.3",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/dotenv": "^8.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.1"
+  }
+}
