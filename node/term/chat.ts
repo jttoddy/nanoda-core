@@ -1,5 +1,6 @@
 import readline from "readline";
 import boxen from "boxen";
+import { z, ZodError } from "zod";
 
 const chatHistory: string[] = [];
 const MAX_HISTORY = 10;
@@ -14,8 +15,9 @@ function render(chat: string[], input: string) {
     margin: { top: 1, bottom: 0, left: 2, right: 2 },
     borderStyle: "round",
     borderColor: "cyan",
-    width: 60,
-    height: 16,
+    fullscreen: (w, h) => {
+      return [w, h - 16];
+    },
   });
   // Render input box
   const inputBox = boxen(input, {
@@ -24,10 +26,12 @@ function render(chat: string[], input: string) {
     margin: { top: 1, bottom: 0, left: 2, right: 2 },
     borderStyle: "round",
     borderColor: "magenta",
-    width: 60,
+    fullscreen: (w, h) => {
+      return [w, 16];
+    },
   });
   console.log(chatBox);
-  console.log(inputBox);
+  // console.log(inputBox);
 }
 
 export function createInterface() {
@@ -75,3 +79,32 @@ export function addChatMessage(message: string) {
   if (chatHistory.length > MAX_HISTORY) chatHistory.shift();
   render(chatHistory, "");
 }
+
+// Subscribe to backend wss localhost:8080
+const ws = new WebSocket("ws://localhost:8080");
+
+// Zod schema for ChatMessage
+export const ChatMessageSchema = z.object({
+  event: z.literal("twitch.chat.message"),
+  data: z.object({
+    channel: z.string(),
+    tags: z.record(z.string(), z.unknown()), // Accepts any object with string keys
+    message: z.string(),
+    self: z.boolean(),
+  }),
+});
+let knownError: ZodError | null = null;
+ws.onmessage = (event: MessageEvent<string>) => {
+  try {
+    const result = ChatMessageSchema.parse(
+      event.data ? JSON.parse(event.data) : {}
+    );
+    const message = result.data;
+    addChatMessage(
+      `[${message.tags.displayName || "unknown"}] ${message.message}`
+    );
+  } catch {}
+};
+
+// Start the terminal chat interface
+createInterface();
