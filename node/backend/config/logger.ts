@@ -12,17 +12,19 @@ const truncateStream = new Transform({
     const lines = chunk.toString().split("\n");
     const processed = lines
       .map((line: string) =>
-        line.length > maxLineLength ? line.slice(0, maxLineLength) : line
+        line.length > maxLineLength ? line.slice(0, maxLineLength) : line,
       )
       .join("\n");
     callback(null, processed + "\n");
   },
 });
 
+fs.mkdirSync("./logs", { recursive: true });
+
 const streams = [
   {
     stream: truncateStream.pipe(
-      fs.createWriteStream("./logs/app.log", { flags: "a" })
+      fs.createWriteStream("./logs/app.log", { flags: "a" }),
     ),
   },
   {

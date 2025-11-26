@@ -9,7 +9,7 @@ server.use(express.json());
 let httpServer: Server | null = null;
 
 server.get("/", (req, res) => {
-  res.send("Twitch EventSub service running!");
+  res.send("Internal REST service running!");
 });
 
 export async function startServer() {
